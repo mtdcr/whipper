@@ -147,7 +147,24 @@ static PyMethodDef accuraterip_methods[] = {
 	{ NULL, NULL, 0, NULL },
 };
 
+#if PY_MAJOR_VERSION < 3
+
 PyMODINIT_FUNC initaccuraterip(void)
 {
 	Py_InitModule("accuraterip", accuraterip_methods);
 }
+
+#else /* PY_MAJOR_VERSION >= 3 below */
+
+static struct PyModuleDef accuraterip_module = {
+	.m_base = PyModuleDef_HEAD_INIT,
+	.m_name = "accuraterip",
+	.m_methods = accuraterip_methods,
+};
+
+PyMODINIT_FUNC PyInit_accuraterip(void)
+{
+	return PyModule_Create(&accuraterip_module);
+}
+
+#endif
